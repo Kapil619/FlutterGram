@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "500823112162",
+    "project_id": "fluttergram619",
+    "storage_bucket": "fluttergram619.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:500823112162:android:c88723ccaacc2d3af9e1bb",
+        "android_client_info": {
+          "package_name": "com.example.fluttergram"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCZ8g01z6A58jS0mNtz-C840sKPZx2Dw9w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
