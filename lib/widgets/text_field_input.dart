@@ -20,6 +20,7 @@ class TextFieldInput extends StatelessWidget {
     return TextField(
       controller: textEditingController,
       decoration: InputDecoration(
+          fillColor: Colors.grey[900],
           hintText: hintText,
           border: inputBorder,
           focusedBorder: inputBorder,
