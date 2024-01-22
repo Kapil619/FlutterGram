@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:fluttergram/responsive/mobile_screen_layout.dart';
+import 'package:fluttergram/responsive/responsive_layout_screen.dart';
+import 'package:fluttergram/responsive/web_screen_layout.dart';
+import 'package:fluttergram/utils/colors.dart';
 
 void main() {
   runApp(const MyApp());
@@ -12,12 +16,11 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter-Gram',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
-      home: const Scaffold(
-        body: Center(child: Text('Fluttergram says hello!')),
+      theme: ThemeData.dark()
+          .copyWith(scaffoldBackgroundColor: mobileBackgroundColor),
+      home: const ResponsiveLayout(
+        mobileScreenLayout: MobileScreenLayout(),
+        webScreenLayout: WebScreenLayout(),
       ),
     );
   }
