@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
       title: 'Flutter-Gram',
       theme: ThemeData.dark()
           .copyWith(scaffoldBackgroundColor: mobileBackgroundColor),
-      home: const SignupScreen(),
+      home: const LoginScreen(),
       // home: const ResponsiveLayout(
       //   mobileScreenLayout: MobileScreenLayout(),
       //   webScreenLayout: WebScreenLayout(),
