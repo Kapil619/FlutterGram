@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttergram/resources/auth_methods.dart';
+import 'package:fluttergram/responsive/mobile_screen_layout.dart';
+import 'package:fluttergram/responsive/responsive_layout_screen.dart';
+import 'package:fluttergram/responsive/web_screen_layout.dart';
+import 'package:fluttergram/screens/login_screen.dart';
 import 'package:fluttergram/utils/colors.dart';
 import 'package:fluttergram/utils/utils.dart';
 import 'package:fluttergram/widgets/text_field_input.dart';
@@ -54,10 +58,27 @@ class _SignupScreenState extends State<SignupScreen> {
         res,
         context,
       );
+    } else {
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(
+          builder: (context) => const ResponsiveLayout(
+            mobileScreenLayout: MobileScreenLayout(),
+            webScreenLayout: WebScreenLayout(),
+          ),
+        ),
+      );
     }
     setState(() {
       _isLoading = false;
     });
+  }
+
+  void navigateToLogin() {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => const LoginScreen(),
+      ),
+    );
   }
 
   @override
@@ -168,11 +189,11 @@ class _SignupScreenState extends State<SignupScreen> {
                     child: const Text("Don't  have an account? "),
                   ),
                   GestureDetector(
-                    onTap: () {},
+                    onTap: navigateToLogin,
                     child: Container(
                       padding: const EdgeInsets.symmetric(vertical: 8),
                       child: const Text(
-                        "Sign up",
+                        "Log in",
                         style: TextStyle(fontWeight: FontWeight.bold),
                       ),
                     ),
