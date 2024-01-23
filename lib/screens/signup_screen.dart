@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:fluttergram/resources/auth_methods.dart';
 import 'package:fluttergram/utils/colors.dart';
 import 'package:fluttergram/widgets/text_field_input.dart';
 
@@ -91,6 +92,14 @@ class _SignupScreenState extends State<SignupScreen> {
               const SizedBox(height: 24),
               //Login btn
               InkWell(
+                onTap: () async {
+                  String res = await AuthMethods().signupUser(
+                      email: _emailController.text,
+                      password: _passwordController.text,
+                      username: _usernameController.text,
+                      bio: _bioController.text);
+                  print(res);
+                },
                 child: Container(
                   width: double.infinity,
                   alignment: Alignment.center,
@@ -103,7 +112,7 @@ class _SignupScreenState extends State<SignupScreen> {
                     ),
                     color: blueColor,
                   ),
-                  child: const Text('Log in'),
+                  child: const Text('Sign up'),
                 ),
               ),
               const SizedBox(height: 12),
