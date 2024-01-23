@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttergram/resources/auth_methods.dart';
 import 'package:fluttergram/utils/colors.dart';
+import 'package:fluttergram/utils/utils.dart';
 import 'package:fluttergram/widgets/text_field_input.dart';
+import 'package:image_picker/image_picker.dart';
 
 class SignupScreen extends StatefulWidget {
   const SignupScreen({super.key});
@@ -16,6 +19,7 @@ class _SignupScreenState extends State<SignupScreen> {
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _bioController = TextEditingController();
   final TextEditingController _usernameController = TextEditingController();
+  Uint8List? _image;
 
   @override
   void dispose() {
@@ -24,6 +28,13 @@ class _SignupScreenState extends State<SignupScreen> {
     _bioController.dispose();
     _usernameController.dispose();
     super.dispose();
+  }
+
+  void selectImage() async {
+    Uint8List im = await pickImage(ImageSource.gallery);
+    setState(() {
+      _image = im;
+    });
   }
 
   @override
@@ -50,15 +61,22 @@ class _SignupScreenState extends State<SignupScreen> {
               const SizedBox(height: 64),
               Stack(
                 children: [
-                  const CircleAvatar(
-                    radius: 48,
-                    backgroundImage: NetworkImage('https://picsum.photos/200'),
-                  ),
+                  _image != null
+                      ? CircleAvatar(
+                          radius: 48,
+                          backgroundImage: MemoryImage(_image!),
+                        )
+                      : const CircleAvatar(
+                          radius: 64,
+                          backgroundImage: NetworkImage(
+                            'https://i.stack.imgur.com/l60Hf.png',
+                          ),
+                        ),
                   Positioned(
                     bottom: -10,
                     left: 60,
                     child: IconButton(
-                      onPressed: () {},
+                      onPressed: selectImage,
                       icon: const Icon(Icons.add_a_photo),
                     ),
                   ),
