@@ -5,6 +5,7 @@ import 'package:fluttergram/responsive/mobile_screen_layout.dart';
 import 'package:fluttergram/responsive/responsive_layout_screen.dart';
 import 'package:fluttergram/responsive/web_screen_layout.dart';
 import 'package:fluttergram/screens/login_screen.dart';
+import 'package:fluttergram/screens/signup_screen.dart';
 import 'package:fluttergram/utils/colors.dart';
 
 void main() async {
@@ -26,7 +27,7 @@ class MyApp extends StatelessWidget {
       title: 'Flutter-Gram',
       theme: ThemeData.dark()
           .copyWith(scaffoldBackgroundColor: mobileBackgroundColor),
-      home: const LoginScreen(),
+      home: const SignupScreen(),
       // home: const ResponsiveLayout(
       //   mobileScreenLayout: MobileScreenLayout(),
       //   webScreenLayout: WebScreenLayout(),

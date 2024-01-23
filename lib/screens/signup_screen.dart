@@ -3,21 +3,25 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttergram/utils/colors.dart';
 import 'package:fluttergram/widgets/text_field_input.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
-
+class SignupScreen extends StatefulWidget {
+  const SignupScreen({super.key});
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<SignupScreen> createState() => _SignupScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _SignupScreenState extends State<SignupScreen> {
+  //controllers for inputs
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _bioController = TextEditingController();
+  final TextEditingController _usernameController = TextEditingController();
 
   @override
   void dispose() {
     _emailController.dispose();
     _passwordController.dispose();
+    _bioController.dispose();
+    _usernameController.dispose();
     super.dispose();
   }
 
@@ -43,17 +47,49 @@ class _LoginScreenState extends State<LoginScreen> {
                 height: 64,
               ),
               const SizedBox(height: 64),
+              Stack(
+                children: [
+                  const CircleAvatar(
+                    radius: 48,
+                    backgroundImage: NetworkImage('https://picsum.photos/200'),
+                  ),
+                  Positioned(
+                    bottom: -10,
+                    left: 60,
+                    child: IconButton(
+                      onPressed: () {},
+                      icon: const Icon(Icons.add_a_photo),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 24),
+              //Username field
+              TextFieldInput(
+                  textEditingController: _usernameController,
+                  textInputType: TextInputType.text,
+                  hintText: 'Enter your username'),
+              const SizedBox(height: 24),
+              //Email field
               TextFieldInput(
                   textEditingController: _emailController,
                   textInputType: TextInputType.emailAddress,
                   hintText: 'Enter your email'),
               const SizedBox(height: 24),
+              //Password field
               TextFieldInput(
                   textEditingController: _passwordController,
                   textInputType: TextInputType.text,
                   hintText: 'Enter your password',
                   isPass: true),
               const SizedBox(height: 24),
+              //Bio field
+              TextFieldInput(
+                  textEditingController: _bioController,
+                  textInputType: TextInputType.text,
+                  hintText: 'Enter your bio'),
+              const SizedBox(height: 24),
+              //Login btn
               InkWell(
                 child: Container(
                   width: double.infinity,
