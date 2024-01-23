@@ -1,13 +1,13 @@
+// ignore_for_file: no_leading_underscores_for_local_identifiers
+
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
 pickImage(ImageSource source) async {
   final ImagePicker _imagepicker = ImagePicker();
-  _imagepicker.pickImage(source: source);
-
   XFile? _file = await _imagepicker.pickImage(source: source);
   if (_file != null) {
     return await _file.readAsBytes();
   }
-  print('No Image Selected');
+  debugPrint('No Image Selected');
 }
