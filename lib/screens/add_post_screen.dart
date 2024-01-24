@@ -1,8 +1,11 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttergram/models/user.dart';
+import 'package:fluttergram/providers/user_provider.dart';
 import 'package:fluttergram/utils/colors.dart';
 import 'package:fluttergram/utils/utils.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:provider/provider.dart';
 
 class AddPostScreen extends StatefulWidget {
   const AddPostScreen({super.key});
@@ -34,7 +37,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
           ),
           SimpleDialogOption(
             padding: const EdgeInsets.all(20),
-            child: const Text('Choose from Galley'),
+            child: const Text('Choose from Gallery'),
             onPressed: () async {
               Navigator.of(context).pop();
               Uint8List file = await pickImage(ImageSource.gallery);
@@ -52,6 +55,8 @@ class _AddPostScreenState extends State<AddPostScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final User user = Provider.of<UserProvider>(context).getUser;
+
     return _file == null
         ? Center(
             child: IconButton(
@@ -89,8 +94,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     CircleAvatar(
-                      backgroundImage:
-                          NetworkImage('https://i.stack.imgur.com/l60Hf.png'),
+                      backgroundImage: NetworkImage(user.photoUrl),
                     ),
                     SizedBox(
                       width: MediaQuery.of(context).size.width * 0.45,
@@ -109,9 +113,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
                         child: Container(
                           decoration: BoxDecoration(
                             image: DecorationImage(
-                                image: NetworkImage(
-                                  'https://i.stack.imgur.com/l60Hf.png',
-                                ),
+                                image: MemoryImage(_file!),
                                 fit: BoxFit.fill,
                                 alignment: FractionalOffset.topCenter),
                           ),
