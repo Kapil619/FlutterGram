@@ -2,6 +2,7 @@ import "package:cloud_firestore/cloud_firestore.dart";
 import "package:firebase_auth/firebase_auth.dart";
 import "package:flutter/foundation.dart";
 import "package:flutter/material.dart";
+import "package:fluttergram/models/user.dart" as model;
 import 'package:fluttergram/resources/storage_methods.dart';
 
 class AuthMethods {
@@ -26,18 +27,22 @@ class AuthMethods {
         debugPrint(cred.user!.uid);
         String photoUrl = await StorageMethods()
             .uploadImageToStorage('profilePics', file, false);
+
         //add user to db
-        await _firestore.collection('users').doc(cred.user!.uid).set(
-          {
-            'email': email,
-            'username': username,
-            'uid': cred.user!.uid,
-            'bio': bio,
-            'followers': [],
-            'following': [],
-            'photoUrl': photoUrl,
-          },
+
+        model.User user = model.User(
+          username: username,
+          email: email,
+          uid: cred.user!.uid,
+          photoUrl: photoUrl,
+          bio: bio,
+          followers: [],
+          following: [],
         );
+
+        await _firestore.collection('users').doc(cred.user!.uid).set(
+              user.toJson(),
+            );
 
         res = 'Success';
       }
@@ -47,6 +52,7 @@ class AuthMethods {
     return res;
   }
 
+  //Login User
   Future<String> loginUser(
       {required String email, required String password}) async {
     String res = ' Some error occured';
