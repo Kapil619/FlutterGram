@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fluttergram/utils/colors.dart';
+import 'package:intl/intl.dart';
 
 class PostCard extends StatelessWidget {
   final snap;
@@ -144,7 +145,7 @@ class PostCard extends StatelessWidget {
                           style: const TextStyle(fontWeight: FontWeight.bold),
                         ),
                         TextSpan(
-                          text: snap['description'],
+                          text: '  ${snap['description']}',
                         ),
                       ],
                     ),
@@ -165,9 +166,11 @@ class PostCard extends StatelessWidget {
 
                 Container(
                   padding: const EdgeInsets.symmetric(vertical: 3),
-                  child: const Text(
-                    '22/12/2021',
-                    style: TextStyle(fontSize: 16, color: secondaryColor),
+                  child: Text(
+                    DateFormat.yMMMd().format(
+                      snap['datePublished'].toDate(),
+                    ),
+                    style: const TextStyle(fontSize: 16, color: secondaryColor),
                   ),
                 ),
               ],
