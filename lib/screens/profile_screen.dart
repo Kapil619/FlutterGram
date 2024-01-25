@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttergram/utils/colors.dart';
 import 'package:fluttergram/utils/utils.dart';
@@ -16,6 +17,9 @@ class ProfileScreen extends StatefulWidget {
 class _ProfileScreenState extends State<ProfileScreen> {
   var userData = {};
   int postLen = 0;
+  int followers = 0;
+  int following = 0;
+  bool isFollowing = false;
 
   @override
   void initState() {
@@ -37,6 +41,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
           .get();
       postLen = postSnap.docs.length;
       userData = userSnap.data()!;
+      followers = userSnap.data()!['followers'].length;
+      following = userSnap.data()!['following'].length;
+      isFollowing = userSnap
+          .data()!['followers']
+          .contains(FirebaseAuth.instance.currentUser!.uid);
+
       setState(() {});
     } catch (e) {
       showSnackBar(e.toString(), context);
@@ -73,20 +83,37 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
                               buildStatColumn(postLen, 'posts'),
-                              buildStatColumn(20, 'followers'),
-                              buildStatColumn(20, 'following'),
+                              buildStatColumn(followers, 'followers'),
+                              buildStatColumn(following, 'following'),
                             ],
                           ),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
-                              FollowButton(
-                                text: 'Edit Profile',
-                                textColor: primaryColor,
-                                backgroundColor: mobileBackgroundColor,
-                                borderColor: Colors.grey,
-                                function: () {},
-                              )
+                              FirebaseAuth.instance.currentUser!.uid ==
+                                      widget.uid
+                                  ? FollowButton(
+                                      text: 'Edit Profile',
+                                      textColor: primaryColor,
+                                      backgroundColor: mobileBackgroundColor,
+                                      borderColor: Colors.grey,
+                                      function: () {},
+                                    )
+                                  : isFollowing
+                                      ? FollowButton(
+                                          text: 'Unfollow',
+                                          textColor: Colors.black,
+                                          backgroundColor: Colors.white,
+                                          borderColor: Colors.grey,
+                                          function: () {},
+                                        )
+                                      : FollowButton(
+                                          text: 'Follow',
+                                          textColor: Colors.white,
+                                          backgroundColor: Colors.blue,
+                                          borderColor: Colors.blue,
+                                          function: () {},
+                                        )
                             ],
                           ),
                         ],
