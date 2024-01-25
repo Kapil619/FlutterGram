@@ -15,7 +15,7 @@ class _CommentCardState extends State<CommentCard> {
       child: Row(
         children: [
           const CircleAvatar(
-            backgroundImage: NetworkImage(''),
+            backgroundImage: NetworkImage('https://picsum.photos/200'),
             radius: 18,
           ),
           Expanded(
