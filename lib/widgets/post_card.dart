@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttergram/models/user.dart';
 import 'package:fluttergram/providers/user_provider.dart';
 import 'package:fluttergram/resources/firestore_methods.dart';
+import 'package:fluttergram/screens/comment_screen.dart';
 import 'package:fluttergram/utils/colors.dart';
 import 'package:fluttergram/widgets/like_animation.dart';
 import 'package:intl/intl.dart';
@@ -144,7 +145,11 @@ class _PostCardState extends State<PostCard> {
                 ),
               ),
               IconButton(
-                onPressed: () {},
+                onPressed: () => Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => CommentScreen(),
+                  ),
+                ),
                 icon: const Icon(
                   Icons.mode_comment_outlined,
                 ),
