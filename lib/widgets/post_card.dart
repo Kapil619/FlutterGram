@@ -5,6 +5,7 @@ import 'package:fluttergram/providers/user_provider.dart';
 import 'package:fluttergram/resources/firestore_methods.dart';
 import 'package:fluttergram/screens/comment_screen.dart';
 import 'package:fluttergram/utils/colors.dart';
+import 'package:fluttergram/utils/global_variables.dart';
 import 'package:fluttergram/utils/utils.dart';
 import 'package:fluttergram/widgets/like_animation.dart';
 import 'package:intl/intl.dart';
@@ -45,8 +46,14 @@ class _PostCardState extends State<PostCard> {
   @override
   Widget build(BuildContext context) {
     final User user = Provider.of<UserProvider>(context).getUser;
+    final width = MediaQuery.of(context).size.width;
     return Container(
-      color: mobileBackgroundColor,
+      decoration: BoxDecoration(
+        border: Border.all(
+          color: width > webScreenSize ? secondaryColor : mobileBackgroundColor,
+        ),
+        color: mobileBackgroundColor,
+      ),
       padding: const EdgeInsets.symmetric(vertical: 10),
       child: Column(
         children: [
