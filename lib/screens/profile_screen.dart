@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fluttergram/utils/colors.dart';
+import 'package:fluttergram/widgets/FollowButton.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -33,21 +34,53 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ),
                     Expanded(
                       flex: 1,
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      child: Column(
                         children: [
-                          buildStatColumn(20, 'posts'),
-                          buildStatColumn(20, 'followers'),
-                          buildStatColumn(20, 'following'),
+                          Row(
+                            mainAxisSize: MainAxisSize.max,
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              buildStatColumn(20, 'posts'),
+                              buildStatColumn(20, 'followers'),
+                              buildStatColumn(20, 'following'),
+                            ],
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              FollowButton(
+                                text: 'Edit Profile',
+                                textColor: primaryColor,
+                                backgroundColor: mobileBackgroundColor,
+                                borderColor: Colors.grey,
+                                function: () {},
+                              )
+                            ],
+                          ),
                         ],
                       ),
-                    )
+                    ),
                   ],
-                )
+                ),
+                Container(
+                  alignment: Alignment.centerLeft,
+                  padding: const EdgeInsets.only(top: 15),
+                  child: const Text(
+                    'username',
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                ),
+                Container(
+                  alignment: Alignment.centerLeft,
+                  padding: const EdgeInsets.only(top: 1),
+                  child: const Text(
+                    'description',
+                  ),
+                ),
               ],
             ),
-          )
+          ),
+          const Divider(),
         ],
       ),
     );
@@ -60,12 +93,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
       children: [
         Text(
           num.toString(),
-          style: const TextStyle(fontSize: 22.0, fontWeight: FontWeight.bold),
+          style: const TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
         ),
-        Text(
-          label,
-          style: const TextStyle(
-              fontSize: 15, fontWeight: FontWeight.w400, color: Colors.grey),
+        Container(
+          margin: const EdgeInsets.only(top: 4.0),
+          child: Text(
+            label,
+            style: const TextStyle(
+                fontSize: 15, fontWeight: FontWeight.w400, color: Colors.grey),
+          ),
         ),
       ],
     );
