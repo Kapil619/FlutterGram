@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fluttergram/models/user.dart';
 import 'package:fluttergram/providers/user_provider.dart';
+import 'package:fluttergram/resources/firestore_methods.dart';
 import 'package:fluttergram/utils/colors.dart';
 import 'package:fluttergram/widgets/like_animation.dart';
 import 'package:intl/intl.dart';
@@ -83,7 +84,9 @@ class _PostCardState extends State<PostCard> {
           ),
           //img section
           GestureDetector(
-            onDoubleTap: () {
+            onDoubleTap: () async {
+              await FirestoreMethods().likePost(
+                  widget.snap['postId'], user.uid, widget.snap['likes']);
               setState(() {
                 isLikeAnimating = true;
               });
@@ -128,7 +131,10 @@ class _PostCardState extends State<PostCard> {
                 isAnimating: widget.snap['likes'].contains(user.uid),
                 smallLike: true,
                 child: IconButton(
-                  onPressed: () {},
+                  onPressed: () async {
+                    await FirestoreMethods().likePost(
+                        widget.snap['postId'], user.uid, widget.snap['likes']);
+                  },
                   icon: const Icon(
                     Icons.favorite,
                     color: Colors.red,
