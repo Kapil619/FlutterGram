@@ -11,6 +11,7 @@ class PostCard extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 10),
       child: Column(
         children: [
+          //header section
           Container(
             padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 16)
                 .copyWith(right: 0),
@@ -38,10 +39,41 @@ class PostCard extends StatelessWidget {
                   ),
                 ),
                 IconButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    showDialog(
+                      context: context,
+                      builder: (context) => Dialog(
+                        child: ListView(
+                            padding: const EdgeInsets.symmetric(vertical: 16),
+                            shrinkWrap: true,
+                            children: ['Delete']
+                                .map(
+                                  (e) => InkWell(
+                                    child: Container(
+                                      padding: const EdgeInsets.symmetric(
+                                        vertical: 12,
+                                        horizontal: 16,
+                                      ),
+                                      child: Text(e),
+                                    ),
+                                  ),
+                                )
+                                .toList()),
+                      ),
+                    );
+                  },
                   icon: const Icon(Icons.more_vert),
                 )
               ],
+            ),
+          ),
+          //img section
+          SizedBox(
+            height: MediaQuery.of(context).size.height * 0.5,
+            width: double.infinity,
+            child: Image.network(
+              'https://picsum.photos/200',
+              fit: BoxFit.cover,
             ),
           ),
         ],
