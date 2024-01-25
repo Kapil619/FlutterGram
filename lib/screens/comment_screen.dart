@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fluttergram/utils/colors.dart';
+import 'package:fluttergram/widgets/comment_card.dart';
 
 class CommentScreen extends StatefulWidget {
   const CommentScreen({super.key});
@@ -18,7 +19,8 @@ class _CommentScreenState extends State<CommentScreen> {
         title: const Text('Comments'),
         centerTitle: false,
       ),
-
+      //comment section
+      body: const CommentCard(),
       //bottom Bar
       bottomNavigationBar: SafeArea(
         child: Container(
