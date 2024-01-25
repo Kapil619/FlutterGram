@@ -110,6 +110,69 @@ class PostCard extends StatelessWidget {
               )
             ],
           ),
+
+          //DESCRIPTION &COMMENT SECTION
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                //likes section
+                DefaultTextStyle(
+                  style: Theme.of(context)
+                      .textTheme
+                      .titleSmall!
+                      .copyWith(fontWeight: FontWeight.w800),
+                  child: Text(
+                    '1,231 likes',
+                    style: Theme.of(context).textTheme.bodyMedium,
+                  ),
+                ),
+
+                //username & captions section
+                Container(
+                  width: double.infinity,
+                  padding: const EdgeInsets.only(top: 8),
+                  child: RichText(
+                    text: TextSpan(
+                      style: const TextStyle(color: primaryColor),
+                      children: [
+                        TextSpan(
+                          text: 'username',
+                          style: const TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                        TextSpan(
+                          text:
+                              '    Hey this is description to the above post ',
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+
+                //view comments section
+                InkWell(
+                  onTap: () {},
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(vertical: 4),
+                    child: const Text(
+                      'View all 200 comments',
+                      style: TextStyle(fontSize: 16, color: secondaryColor),
+                    ),
+                  ),
+                ),
+
+                Container(
+                  padding: const EdgeInsets.symmetric(vertical: 3),
+                  child: const Text(
+                    '22/12/2021',
+                    style: TextStyle(fontSize: 16, color: secondaryColor),
+                  ),
+                ),
+              ],
+            ),
+          )
         ],
       ),
     );
