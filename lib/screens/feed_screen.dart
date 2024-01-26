@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:fluttergram/screens/chat_screen.dart';
 import 'package:fluttergram/utils/colors.dart';
 import 'package:fluttergram/utils/global_variables.dart';
 import 'package:fluttergram/widgets/post_card.dart';
@@ -27,7 +28,11 @@ class FeedScreen extends StatelessWidget {
               actions: [
                 IconButton(
                   icon: const Icon(Icons.messenger_outline),
-                  onPressed: () {},
+                  onPressed: () => Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => const ChatScreen(),
+                    ),
+                  ),
                 ),
               ],
             ),

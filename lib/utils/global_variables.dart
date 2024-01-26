@@ -11,7 +11,7 @@ List<Widget> homeScreenItems = [
   const FeedScreen(),
   const SearchScreen(),
   const AddPostScreen(),
-  const Text('Likes'),
+  const Center(child: const Text('Coming soon: Likes')),
   ProfileScreen(
     uid: FirebaseAuth.instance.currentUser!.uid,
   )
