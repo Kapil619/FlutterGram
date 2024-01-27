@@ -1,16 +1,75 @@
-# fluttergram
 
-A new Flutter project.
+# FlutterGram 
 
-## Getting Started
+FlutterGram is an Instagram clone built with Flutter.
 
-This project is a starting point for a Flutter application.
 
-A few resources to get you started if this is your first Flutter project:
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+## Tech Stack
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+**Frontend:** Flutter, Provider
+
+**Backend:** Firebase, Firestore 
+
+
+## Features
+
+- Authentication - Login/Signup
+- Realtime Feed for Posts
+- Creating posts with Camera / Select from Gallery
+- Searching Users 
+- Personal Profile Screen
+- Realtime Trending Posts Tab
+- Like/Dislike posts 
+- Commenting on Posts
+
+
+## Screenshots
+<img src="https://github.com/Kapil619/FlutterGram/assets/84692375/7a5ef5a1-91e8-4029-894e-884ef1eeeb7d" with='500' height='500'>
+<img src="https://github.com/Kapil619/FlutterGram/assets/84692375/0e103c47-3734-4549-a51f-001f2a4110b4" with='500' height='500'>
+
+
+
+
+
+## Run Locally
+
+Clone the project
+
+```bash
+  git clone https://github.com/Kapil619/FlutterGram.git
+```
+
+Go to the project directory
+
+```bash
+  cd fluttergram
+```
+
+Install dependencies
+
+```bash
+  flutter pub add
+```
+
+Start the application
+
+```bash
+  flutter run
+```
+
+
+## Feedback
+
+If you have any feedback, please reach out to me at kapilbadokar321@gmail.com
+
+
+## Future Improvements
+
+- Authentication with Mobile Number 
+
+- Instagram Stories Feature
+
+- In App Messaging
+
+- Like Comments & storing data
