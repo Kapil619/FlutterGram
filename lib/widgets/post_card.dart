@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttergram/models/user.dart';
 import 'package:fluttergram/providers/user_provider.dart';
@@ -248,6 +249,16 @@ class _PostCardState extends State<PostCard> {
                       style: const TextStyle(color: primaryColor),
                       children: [
                         TextSpan(
+                          recognizer: TapGestureRecognizer()
+                            ..onTap = () {
+                              Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  builder: (context) => ProfileScreen(
+                                    uid: widget.snap['uid'],
+                                  ),
+                                ),
+                              );
+                            },
                           text: widget.snap['username'],
                           style: const TextStyle(fontWeight: FontWeight.bold),
                         ),
