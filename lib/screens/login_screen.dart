@@ -45,9 +45,11 @@ class _LoginScreenState extends State<LoginScreen> {
           ),
         ),
       );
-      showSnackBar(res, context);
+      showSnackBar(res, context,
+          color: Colors.green[700], textColor: Colors.white);
     } else {
-      showSnackBar(res, context);
+      showSnackBar(res, context,
+          color: Colors.red[700], textColor: Colors.white);
     }
     setState(() {
       _isLoading = false;

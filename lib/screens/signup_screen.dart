@@ -43,34 +43,52 @@ class _SignupScreenState extends State<SignupScreen> {
   }
 
   void signUpUser() async {
-    setState(() {
-      _isLoading = true;
-    });
-    String res = await AuthMethods().signupUser(
-      email: _emailController.text,
-      password: _passwordController.text,
-      username: _usernameController.text,
-      bio: _bioController.text,
-      file: _image!,
-    );
-    if (res != 'Success') {
-      showSnackBar(
-        res,
-        context,
+    try {
+      setState(() {
+        _isLoading = true;
+      });
+      String res = await AuthMethods().signupUser(
+        email: _emailController.text,
+        password: _passwordController.text,
+        username: _usernameController.text,
+        bio: _bioController.text,
+        file: _image!,
       );
-    } else {
-      Navigator.of(context).pushReplacement(
-        MaterialPageRoute(
-          builder: (context) => const ResponsiveLayout(
-            mobileScreenLayout: MobileScreenLayout(),
-            webScreenLayout: WebScreenLayout(),
+      if (res != 'Success') {
+        setState(() {
+          _isLoading = false;
+        });
+        showSnackBar(
+          res,
+          context,
+          color: Colors.red[700],
+          textColor: Colors.white,
+        );
+      } else {
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(
+            builder: (context) => const ResponsiveLayout(
+              mobileScreenLayout: MobileScreenLayout(),
+              webScreenLayout: WebScreenLayout(),
+            ),
           ),
-        ),
+        );
+      }
+      setState(
+        () {
+          _isLoading = false;
+        },
       );
+    } catch (e) {
+      debugPrint(e.toString());
+      setState(
+        () {
+          _isLoading = false;
+        },
+      );
+      showSnackBar('Complete all fields', context,
+          color: Colors.red[700], textColor: Colors.white);
     }
-    setState(() {
-      _isLoading = false;
-    });
   }
 
   void navigateToLogin() {
@@ -153,7 +171,7 @@ class _SignupScreenState extends State<SignupScreen> {
                     textInputType: TextInputType.text,
                     hintText: 'Enter your bio'),
                 const SizedBox(height: 24),
-                //Login btn
+                //signup btn
                 InkWell(
                   onTap: signUpUser,
                   child: Container(
