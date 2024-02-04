@@ -234,7 +234,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               Navigator.of(context).push(
                                 MaterialPageRoute(
                                   builder: (context) => Padding(
-                                    padding: const EdgeInsets.only(top: 25.0),
+                                    padding: const EdgeInsets.only(top: 25),
                                     child: PostCard(
                                       snap: snapshot.data!.docs[index].data(),
                                     ),

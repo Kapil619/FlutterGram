@@ -24,6 +24,7 @@ class PostCard extends StatefulWidget {
 class _PostCardState extends State<PostCard> {
   bool isLikeAnimating = false;
   int commentLength = 0;
+  bool isSaved = false;
 
   @override
   void initState() {
@@ -215,7 +216,9 @@ class _PostCardState extends State<PostCard> {
                   ),
                 ),
                 IconButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    showSnackBar('Sharing Posts is coming soon!', context);
+                  },
                   icon: const Icon(
                     Icons.send,
                   ),
@@ -224,8 +227,15 @@ class _PostCardState extends State<PostCard> {
                   child: Align(
                     alignment: Alignment.bottomRight,
                     child: IconButton(
-                      onPressed: () {},
-                      icon: const Icon(Icons.bookmark_border),
+                      onPressed: () {
+                        setState(() {
+                          isSaved = !isSaved;
+                        });
+                        showSnackBar('Saved Posts are coming soon!', context);
+                      },
+                      icon: !isSaved
+                          ? const Icon(Icons.bookmark_border)
+                          : const Icon(Icons.bookmark),
                     ),
                   ),
                 )

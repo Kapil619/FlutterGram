@@ -20,6 +20,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
   final TextEditingController _descriptionController = TextEditingController();
   bool _isLoading = false;
 
+//postImg function
   void postImage(
     String uid,
     String username,
@@ -39,7 +40,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
         clearImage();
       } else {
         setState(() {
-          bool _isLoading = true;
+          _isLoading = true;
         });
         showSnackBar(res, context);
       }
@@ -48,6 +49,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
     }
   }
 
+  //selectImage function
   _selectImage(BuildContext context) async {
     return showDialog(
       context: context,
@@ -108,11 +110,22 @@ class _AddPostScreenState extends State<AddPostScreen> {
     final User user = Provider.of<UserProvider>(context).getUser;
 
     return _file == null
-        ? Center(
-            child: IconButton(
-              icon: const Icon(Icons.upload),
-              onPressed: () => _selectImage(context),
+        ? Scaffold(
+            appBar: AppBar(
+              backgroundColor: mobileBackgroundColor,
+              title: const Text('New Post'),
             ),
+            body: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Center(
+                    child: IconButton(
+                      icon: const Icon(size: 80, Icons.upload),
+                      onPressed: () => _selectImage(context),
+                    ),
+                  ),
+                ]),
           )
         : Scaffold(
             appBar: AppBar(
