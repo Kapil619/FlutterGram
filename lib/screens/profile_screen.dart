@@ -7,6 +7,7 @@ import 'package:fluttergram/screens/login_screen.dart';
 import 'package:fluttergram/utils/colors.dart';
 import 'package:fluttergram/utils/utils.dart';
 import 'package:fluttergram/widgets/FollowButton.dart';
+import 'package:fluttergram/widgets/post_card.dart';
 
 class ProfileScreen extends StatefulWidget {
   final String uid;
@@ -70,17 +71,26 @@ class _ProfileScreenState extends State<ProfileScreen> {
             child: CircularProgressIndicator(),
           )
         : Scaffold(
+            //appbar
             appBar: AppBar(
               backgroundColor: mobileBackgroundColor,
               title: Text(userData['username']),
               centerTitle: false,
+              actions: [
+                IconButton(
+                  icon: const Icon(Icons.menu_sharp),
+                  onPressed: () async {},
+                ),
+              ],
             ),
+            //body
             body: ListView(
               children: [
                 Padding(
                   padding: const EdgeInsets.all(16.0),
                   child: Column(
                     children: [
+                      //photo, stats and follow button
                       Row(
                         children: [
                           CircleAvatar(
@@ -171,6 +181,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           ),
                         ],
                       ),
+                      //usernmame and bio
                       Container(
                         alignment: Alignment.centerLeft,
                         padding: const EdgeInsets.only(top: 15),
@@ -190,12 +201,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   ),
                 ),
                 const Divider(),
-                FutureBuilder(
-                  future: FirebaseFirestore.instance
+                StreamBuilder(
+                  stream: FirebaseFirestore.instance
                       .collection('posts')
                       .where('uid', isEqualTo: widget.uid)
-                      .get(),
-                  builder: (context, snapshot) {
+                      .snapshots(),
+                  builder: (context,
+                      AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>>
+                          snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
                       return const Center(
                         child: CircularProgressIndicator(),
@@ -215,9 +228,25 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             (snapshot.data! as dynamic).docs[index];
 
                         return Container(
-                          child: Image(
-                            image: NetworkImage(snap['postUrl']),
-                            fit: BoxFit.cover,
+                          child: GestureDetector(
+                            onTap: () {
+                              //open post
+                              Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  builder: (context) => Padding(
+                                    padding: const EdgeInsets.only(top: 25.0),
+                                    child: PostCard(
+                                      snap: snapshot.data!.docs[index].data(),
+                                    ),
+                                  ),
+                                ),
+                              );
+                              setState(() {});
+                            },
+                            child: Image(
+                              image: NetworkImage(snap['postUrl']),
+                              fit: BoxFit.cover,
+                            ),
                           ),
                         );
                       },
