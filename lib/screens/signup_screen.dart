@@ -102,7 +102,7 @@ class _SignupScreenState extends State<SignupScreen> {
                 // color: primaryColor,
                 height: 64,
               ),
-              const SizedBox(height: 64),
+              const SizedBox(height: 34),
               Stack(
                 children: [
                   _image != null
@@ -111,7 +111,7 @@ class _SignupScreenState extends State<SignupScreen> {
                           backgroundImage: MemoryImage(_image!),
                         )
                       : const CircleAvatar(
-                          radius: 64,
+                          radius: 48,
                           backgroundImage: NetworkImage(
                             'https://i.stack.imgur.com/l60Hf.png',
                           ),
@@ -176,11 +176,12 @@ class _SignupScreenState extends State<SignupScreen> {
                       : const Text('Sign up'),
                 ),
               ),
-              const SizedBox(height: 12),
+              // const SizedBox(height: 12),
               Flexible(
                 flex: 2,
                 child: Container(),
               ),
+              //bottom footer
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [

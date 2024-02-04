@@ -4,6 +4,7 @@ import 'package:fluttergram/models/user.dart';
 import 'package:fluttergram/providers/user_provider.dart';
 import 'package:fluttergram/resources/firestore_methods.dart';
 import 'package:fluttergram/screens/comment_screen.dart';
+import 'package:fluttergram/screens/profile_screen.dart';
 import 'package:fluttergram/utils/colors.dart';
 import 'package:fluttergram/utils/global_variables.dart';
 import 'package:fluttergram/utils/utils.dart';
@@ -74,10 +75,19 @@ class _PostCardState extends State<PostCard> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          widget.snap['username'],
-                          style: const TextStyle(
-                            fontWeight: FontWeight.bold,
+                        InkWell(
+                          onTap: () => Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => ProfileScreen(
+                                uid: widget.snap['uid'],
+                              ),
+                            ),
+                          ),
+                          child: Text(
+                            widget.snap['username'],
+                            style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                         )
                       ],
