@@ -107,31 +107,48 @@ class _PostCardState extends State<PostCard> {
                             padding: const EdgeInsets.symmetric(vertical: 8),
                             shrinkWrap: true,
                             children: [
-                              InkWell(
-                                onTap: () async {
-                                  FirestoreMethods().deletePost(
-                                    widget.snap['postId'],
-                                  );
-                                  Navigator.of(context).pop();
-                                },
-                                child: Container(
-                                  padding: const EdgeInsets.symmetric(
-                                    vertical: 12,
-                                    horizontal: 16,
-                                  ),
-                                  child: const Text('Delete'),
-                                ),
-                              ),
-                              InkWell(
-                                onTap: () {},
-                                child: Container(
-                                  padding: const EdgeInsets.symmetric(
-                                    vertical: 12,
-                                    horizontal: 16,
-                                  ),
-                                  child: const Text('Unfollow'),
-                                ),
-                              ),
+                              user.uid == widget.snap['uid']
+                                  ? InkWell(
+                                      onTap: () async {
+                                        await FirestoreMethods().deletePost(
+                                          widget.snap['postId'],
+                                        );
+                                        showSnackBar('Post Deleted', context);
+                                        Navigator.of(context).pop();
+                                      },
+                                      child: user.uid == widget.snap['uid']
+                                          ? Container(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                vertical: 12,
+                                                horizontal: 16,
+                                              ),
+                                              child: const Text('Delete'),
+                                            )
+                                          : Container(),
+                                    )
+                                  : InkWell(
+                                      onTap: () {},
+                                      child: Container(
+                                        padding: const EdgeInsets.symmetric(
+                                          vertical: 12,
+                                          horizontal: 16,
+                                        ),
+                                        child: const Text('Unfollow'),
+                                      ),
+                                    ),
+                              user.uid != widget.snap['uid']
+                                  ? InkWell(
+                                      onTap: () {},
+                                      child: Container(
+                                        padding: const EdgeInsets.symmetric(
+                                          vertical: 12,
+                                          horizontal: 16,
+                                        ),
+                                        child: const Text('Report'),
+                                      ),
+                                    )
+                                  : Container()
                             ],
                           ),
                         ),
