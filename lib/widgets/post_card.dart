@@ -101,27 +101,36 @@ class _PostCardState extends State<PostCard> {
                       context: context,
                       builder: (context) => Dialog(
                         child: ListView(
-                            padding: const EdgeInsets.symmetric(vertical: 16),
-                            shrinkWrap: true,
-                            children: ['Delete']
-                                .map(
-                                  (e) => InkWell(
-                                    onTap: () async {
-                                      FirestoreMethods().deletePost(
-                                        widget.snap['postId'],
-                                      );
-                                      Navigator.of(context).pop();
-                                    },
-                                    child: Container(
-                                      padding: const EdgeInsets.symmetric(
-                                        vertical: 12,
-                                        horizontal: 16,
-                                      ),
-                                      child: Text(e),
-                                    ),
-                                  ),
-                                )
-                                .toList()),
+                          padding: const EdgeInsets.symmetric(vertical: 8),
+                          shrinkWrap: true,
+                          children: [
+                            InkWell(
+                              onTap: () async {
+                                FirestoreMethods().deletePost(
+                                  widget.snap['postId'],
+                                );
+                                Navigator.of(context).pop();
+                              },
+                              child: Container(
+                                padding: const EdgeInsets.symmetric(
+                                  vertical: 12,
+                                  horizontal: 16,
+                                ),
+                                child: const Text('Delete'),
+                              ),
+                            ),
+                            InkWell(
+                              onTap: () {},
+                              child: Container(
+                                padding: const EdgeInsets.symmetric(
+                                  vertical: 12,
+                                  horizontal: 16,
+                                ),
+                                child: const Text('Unfollow'),
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     );
                   },
@@ -272,11 +281,21 @@ class _PostCardState extends State<PostCard> {
 
                 //view comments section
                 InkWell(
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => CommentScreen(
+                          snap: widget.snap,
+                        ),
+                      ),
+                    );
+                  },
                   child: Container(
-                    padding: const EdgeInsets.symmetric(vertical: 4),
+                    padding: const EdgeInsets.symmetric(vertical: 2),
                     child: Text(
-                      'View all $commentLength comments',
+                      commentLength == 0
+                          ? 'View comments'
+                          : 'View all $commentLength comments',
                       style:
                           const TextStyle(fontSize: 16, color: secondaryColor),
                     ),

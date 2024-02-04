@@ -156,10 +156,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                         .currentUser!.uid,
                                                     userData['uid'],
                                                   );
-                                                  setState(() {
-                                                    isFollowing = true;
-                                                    followers++;
-                                                  });
+                                                  setState(
+                                                    () {
+                                                      isFollowing = true;
+                                                      followers++;
+                                                    },
+                                                  );
                                                 },
                                               )
                                   ],
