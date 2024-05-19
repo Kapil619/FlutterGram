@@ -79,7 +79,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
               actions: [
                 IconButton(
                   icon: const Icon(Icons.menu_sharp),
-                  onPressed: () async {},
+                  onPressed: () async {
+                    showSnackBar('Coming Soon', context);
+                  },
                 ),
               ],
             ),
