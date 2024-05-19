@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -174,9 +175,22 @@ class _PostCardState extends State<PostCard> {
                   SizedBox(
                     height: MediaQuery.of(context).size.height * 0.5,
                     width: double.infinity,
-                    child: Image.network(
-                      widget.snap['postUrl'],
+                    child: CachedNetworkImage(
+                      imageUrl: widget.snap['postUrl'],
                       fit: BoxFit.cover,
+                      filterQuality: FilterQuality.medium,
+                      progressIndicatorBuilder:
+                          (context, url, downloadProgress) => Center(
+                        child: SizedBox(
+                          width: 30.0, // or another size
+                          height: 30.0, // or another size
+                          child: CircularProgressIndicator(
+                            value: downloadProgress.progress,
+                          ),
+                        ),
+                      ),
+                      errorWidget: (context, url, error) =>
+                          const Icon(Icons.error),
                     ),
                   ),
                   AnimatedOpacity(
