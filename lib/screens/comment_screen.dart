@@ -48,6 +48,11 @@ class _CommentScreenState extends State<CommentScreen> {
               child: CircularProgressIndicator(),
             );
           }
+          if ((snapshot.data! as dynamic).docs.isEmpty) {
+            return const Center(
+              child: Text('No comments yet'),
+            );
+          }
           return ListView.builder(
             itemBuilder: (context, index) => CommentCard(
                 snap: (snapshot.data! as dynamic).docs[index].data()),
