@@ -65,12 +65,44 @@ class _SignupScreenState extends State<SignupScreen> {
           textColor: Colors.white,
         );
       } else {
-        Navigator.of(context).pushReplacement(
-          MaterialPageRoute(
-            builder: (context) => const ResponsiveLayout(
-              mobileScreenLayout: MobileScreenLayout(),
-              webScreenLayout: WebScreenLayout(),
-            ),
+        await AuthMethods().sendEmailVerification(context);
+        showDialog(
+          barrierDismissible: false,
+          context: context,
+          builder: (context) => AlertDialog(
+            backgroundColor: mobileBackgroundColor,
+            title: const Text('Verify Your Email'),
+            content: const Text(
+                'A verification email has been sent. Please verify your email before proceeding.'),
+            actions: [
+              TextButton(
+                style: TextButton.styleFrom(
+                  foregroundColor: Colors.white,
+                  backgroundColor: Colors.blueAccent,
+                ),
+                child: const Text('Check Verification'),
+                onPressed: () async {
+                  bool isEmailVerified = await AuthMethods().isEmailVerified();
+                  if (isEmailVerified) {
+                    Navigator.of(context).pushReplacement(
+                      MaterialPageRoute(
+                        builder: (context) => const ResponsiveLayout(
+                          mobileScreenLayout: MobileScreenLayout(),
+                          webScreenLayout: WebScreenLayout(),
+                        ),
+                      ),
+                    );
+                  } else {
+                    showSnackBar(
+                      'Please verify your email before proceeding',
+                      context,
+                      color: Colors.red[700],
+                      textColor: Colors.white,
+                    );
+                  }
+                },
+              ),
+            ],
           ),
         );
       }

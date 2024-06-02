@@ -1,8 +1,12 @@
+import "dart:async";
+
 import "package:cloud_firestore/cloud_firestore.dart";
 import "package:firebase_auth/firebase_auth.dart";
 import "package:flutter/foundation.dart";
+import "package:flutter/widgets.dart";
 import "package:fluttergram/models/user.dart" as model;
 import 'package:fluttergram/resources/storage_methods.dart';
+import "package:fluttergram/utils/utils.dart";
 
 class AuthMethods {
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -15,6 +19,28 @@ class AuthMethods {
         await _firestore.collection('users').doc(currentUser.uid).get();
 
     return model.User.fromSnap(snap);
+  }
+
+  Future<bool> isEmailVerified() async {
+    await _auth.currentUser!.reload();
+    return _auth.currentUser!.emailVerified;
+  }
+
+  Future<void> sendEmailVerification(BuildContext context) async {
+    try {
+      _auth.currentUser!.sendEmailVerification();
+      showSnackBar('Email verification sent!', context);
+      Timer.periodic(const Duration(seconds: 5), (timer) async {
+        // Reload the user to get the latest details
+        await _auth.currentUser!.reload();
+        if (_auth.currentUser!.emailVerified) {
+          timer.cancel(); // Stop the periodic checks
+          showSnackBar('Email is verified!', context);
+        }
+      });
+    } on FirebaseAuthException catch (e) {
+      showSnackBar('Failed to send Email Verification! ${e.message}', context);
+    }
   }
 
   //Signup user
