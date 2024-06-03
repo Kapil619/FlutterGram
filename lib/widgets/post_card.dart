@@ -47,6 +47,12 @@ class _PostCardState extends State<PostCard> {
     setState(() {});
   }
 
+  void followUserAndUpdateUI(
+      BuildContext context, String uid, String followId) async {
+    await FirestoreMethods().followUser(uid, followId);
+    showSnackBar('Follow status updated', context);
+  }
+
   @override
   Widget build(BuildContext context) {
     final User user = Provider.of<UserProvider>(context).getUser;
@@ -71,7 +77,8 @@ class _PostCardState extends State<PostCard> {
                 children: [
                   CircleAvatar(
                     radius: 16,
-                    backgroundImage: NetworkImage(widget.snap['profImage']),
+                    backgroundImage:
+                        CachedNetworkImageProvider(widget.snap['profImage']),
                   ),
                   Expanded(
                     child: Padding(
@@ -129,18 +136,27 @@ class _PostCardState extends State<PostCard> {
                                           : Container(),
                                     )
                                   : InkWell(
-                                      onTap: () {},
+                                      onTap: () async {
+                                        followUserAndUpdateUI(context, user.uid,
+                                            widget.snap['uid']);
+                                        await Future.delayed(
+                                            Duration(seconds: 1));
+                                        Navigator.of(context).pop();
+                                      },
                                       child: Container(
-                                        padding: const EdgeInsets.symmetric(
-                                          vertical: 12,
-                                          horizontal: 16,
-                                        ),
-                                        child: const Text('Unfollow'),
-                                      ),
+                                          padding: const EdgeInsets.symmetric(
+                                            vertical: 12,
+                                            horizontal: 16,
+                                          ),
+                                          child:
+                                              const Text('Follow / Unfollow')),
                                     ),
                               user.uid != widget.snap['uid']
                                   ? InkWell(
-                                      onTap: () {},
+                                      onTap: () {
+                                        showSnackBar('Post Reported', context);
+                                        Navigator.of(context).pop();
+                                      },
                                       child: Container(
                                         padding: const EdgeInsets.symmetric(
                                           vertical: 12,

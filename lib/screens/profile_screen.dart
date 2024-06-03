@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -98,7 +99,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           CircleAvatar(
                             backgroundColor: Colors.grey,
                             radius: 40,
-                            backgroundImage: NetworkImage(userData['photoUrl']),
+                            backgroundImage: CachedNetworkImageProvider(
+                                userData['photoUrl']),
                           ),
                           Expanded(
                             flex: 1,
@@ -129,11 +131,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                             function: () async {
                                               await AuthMethods().signOut();
                                               Navigator.of(context)
-                                                  .pushReplacement(
+                                                  .pushAndRemoveUntil(
                                                 MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      const LoginScreen(),
-                                                ),
+                                                    builder: (context) =>
+                                                        const LoginScreen()),
+                                                (Route<dynamic> route) => false,
                                               );
                                             },
                                           )
@@ -245,9 +247,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               );
                               setState(() {});
                             },
-                            child: Image(
-                              image: NetworkImage(snap['postUrl']),
+                            child: CachedNetworkImage(
+                              imageUrl: snap['postUrl'],
                               fit: BoxFit.cover,
+                              errorWidget: (context, url, error) =>
+                                  const Icon(Icons.error),
+                              placeholder: (context, url) =>
+                                  const Icon(Icons.image),
                             ),
                           ),
                         );

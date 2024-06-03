@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
@@ -62,25 +63,33 @@ class _SearchScreenState extends State<SearchScreen> {
                 return ListView.builder(
                   itemCount: (snapshot.data! as dynamic).docs.length,
                   itemBuilder: (context, index) {
-                    return InkWell(
-                      onTap: () => Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (context) => ProfileScreen(
-                            uid: (snapshot.data! as dynamic).docs[index]['uid'],
+                    var document = (snapshot.data! as dynamic).docs[index];
+                    if (document.exists) {
+                      var photoUrl = document.data().containsKey('photoUrl')
+                          ? document['photoUrl']
+                          : null;
+                      return InkWell(
+                        onTap: () => Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => ProfileScreen(
+                              uid: document['uid'],
+                            ),
                           ),
                         ),
-                      ),
-                      child: ListTile(
-                        leading: CircleAvatar(
-                          backgroundImage: NetworkImage(
-                            (snapshot.data! as dynamic).docs[index]['photoUrl'],
+                        child: ListTile(
+                          leading: CircleAvatar(
+                            backgroundImage: photoUrl != null
+                                ? CachedNetworkImageProvider(photoUrl)
+                                : null,
+                          ),
+                          title: Text(
+                            document['username'],
                           ),
                         ),
-                        title: Text(
-                          (snapshot.data! as dynamic).docs[index]['username'],
-                        ),
-                      ),
-                    );
+                      );
+                    } else {
+                      return const SizedBox();
+                    }
                   },
                 );
               },
@@ -96,8 +105,13 @@ class _SearchScreenState extends State<SearchScreen> {
                 return StaggeredGridView.countBuilder(
                   crossAxisCount: 3,
                   itemCount: (snapshot.data! as dynamic).docs.length,
-                  itemBuilder: (context, index) => Image.network(
-                      (snapshot.data! as dynamic).docs[index]['postUrl']),
+                  itemBuilder: (context, index) => CachedNetworkImage(
+                    placeholder: (context, url) => const Icon(Icons.image),
+                    imageUrl: (snapshot.data! as dynamic).docs[index]
+                        ['postUrl'],
+                    errorWidget: (context, url, error) =>
+                        const Icon(Icons.error),
+                  ),
                   staggeredTileBuilder: (index) => MediaQuery.of(context)
                               .size
                               .width >
