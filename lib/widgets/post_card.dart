@@ -75,10 +75,15 @@ class _PostCardState extends State<PostCard> {
                   .copyWith(right: 0),
               child: Row(
                 children: [
-                  CircleAvatar(
-                    radius: 16,
-                    backgroundImage:
-                        CachedNetworkImageProvider(widget.snap['profImage']),
+                  CachedNetworkImage(
+                    imageUrl: widget.snap['profImage'],
+                    imageBuilder: (context, imageProvider) => CircleAvatar(
+                      radius: 16,
+                      backgroundImage: imageProvider,
+                    ),
+                    placeholder: (context, url) => const Icon(Icons.image),
+                    errorWidget: (context, url, error) =>
+                        const Icon(Icons.error),
                   ),
                   Expanded(
                     child: Padding(
