@@ -7,7 +7,7 @@ FlutterGram is an Instagram clone built with Flutter.
 
 ## Tech Stack
 
-**Frontend:** Flutter, Provider
+**Frontend:** Flutter, Provider, Dart.
 
 **Backend:** Firebase, Firestore 
 
@@ -22,6 +22,8 @@ FlutterGram is an Instagram clone built with Flutter.
 - Realtime Trending Posts Tab
 - Like/Dislike posts 
 - Commenting on Posts
+- Caching for Images
+- Push Notifications
 
 
 ## Screenshots
@@ -72,4 +74,3 @@ If you have any feedback, please reach out to me at kapilbadokar321@gmail.com
 
 - In App Messaging
 
-- Like Comments & storing data
