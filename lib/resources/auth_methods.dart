@@ -2,6 +2,7 @@ import "dart:async";
 
 import "package:cloud_firestore/cloud_firestore.dart";
 import "package:firebase_auth/firebase_auth.dart";
+import "package:firebase_messaging/firebase_messaging.dart";
 import "package:flutter/foundation.dart";
 import "package:flutter/widgets.dart";
 import "package:fluttergram/models/user.dart" as model;
@@ -11,7 +12,7 @@ import "package:fluttergram/utils/utils.dart";
 class AuthMethods {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-
+  final FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
   Future<model.User> getUserDetails() async {
     User currentUser = _auth.currentUser!;
 
@@ -78,6 +79,10 @@ class AuthMethods {
         await _firestore.collection('users').doc(cred.user!.uid).set(
               user.toJson(),
             );
+        final fcmtoken = await _firebaseMessaging.getToken();
+        await _firestore.collection('users').doc(cred.user!.uid).update({
+          'token': fcmtoken,
+        });
 
         res = 'Success';
       }
