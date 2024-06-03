@@ -84,13 +84,14 @@ class _SignupScreenState extends State<SignupScreen> {
                 onPressed: () async {
                   bool isEmailVerified = await AuthMethods().isEmailVerified();
                   if (isEmailVerified) {
-                    Navigator.of(context).pushReplacement(
+                    Navigator.of(context).pushAndRemoveUntil(
                       MaterialPageRoute(
                         builder: (context) => const ResponsiveLayout(
                           mobileScreenLayout: MobileScreenLayout(),
                           webScreenLayout: WebScreenLayout(),
                         ),
                       ),
+                      (Route<dynamic> route) => false,
                     );
                   } else {
                     showSnackBar(

@@ -40,13 +40,14 @@ class _LoginScreenState extends State<LoginScreen> {
 
     if (res == 'Success') {
       if (mounted) {
-        Navigator.of(context).pushReplacement(
+        Navigator.of(context).pushAndRemoveUntil(
           MaterialPageRoute(
             builder: (context) => const ResponsiveLayout(
               mobileScreenLayout: MobileScreenLayout(),
               webScreenLayout: WebScreenLayout(),
             ),
           ),
+          (Route<dynamic> route) => false,
         );
       }
       showSnackBar(res, context,
